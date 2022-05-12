@@ -1,0 +1,20 @@
+{
+  "name": "auth-api",
+  "version": "1.0.0",
+  "description": "API de autenticação",
+  "main": "app.js",
+  "author": "Erick",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.17.3",
+    "jest": "^27.5.1",
+    "mysql": "^2.18.1"
+  },
+  "scripts": {
+    "server": "nodemon app.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
