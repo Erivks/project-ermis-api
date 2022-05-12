@@ -38,6 +38,30 @@ class BusinessService {
         const params = this.validateParams(req);
         const result = await BusinessRepository.updateByID(params.id, body);
 
+        this.checkUpdateResult(result);
+        return { status: HTTP_CODE.OK }
+    }
+
+    async updateByCNPJ(req) {
+        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::updateByCNPJ");
+
+        const body = this.validateRequest(req);
+        const params = this.validateParams(req);
+        const result = await BusinessRepository.updateByCNPJ(params.cnpj, body);
+
+        this.checkUpdateResult(result);
+        return { status: HTTP_CODE.OK };
+    }
+
+    async create(req) {
+        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::create");
+
+        const body = this.validateRequest(req);
+        await BusinessRepository.create(body); 
+        return { status: HTTP_CODE.OK };    
+    }
+
+    checkUpdateResult(result) {
         if (typeof result == "object" && result[0] === 0) {
             logger(LOG_LEVEL.LOG_ERR, `Row affected for Business updateByID: ${JSON.stringify(result)}`);
             throw new ApiException(
@@ -45,15 +69,6 @@ class BusinessService {
                 "Update failed"
             );
         }
-        
-        return { status: HTTP_CODE.OK }
-    }
-    async create(req) {
-        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::create");
-
-        const body = this.validateRequest(req);
-        await BusinessRepository.create(body); 
-        return { status: HTTP_CODE.OK };    
     }
 
     validateParams(req) {

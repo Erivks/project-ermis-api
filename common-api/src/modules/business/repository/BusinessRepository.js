@@ -60,6 +60,25 @@ class BusinessRepository {
             );
         }
     }
+
+    async updateByCNPJ(cnpj, body) {
+        try {
+            logger(LOG_LEVEL.LOG_INFO, "Running BusinessRepository::updateByCNPJ");
+            const result = await BusinessModel.update(body, {
+                where: {
+                    cnpj: cnpj
+                }
+            });
+
+            return result;
+        } catch (error) {
+            logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
+            throw new ApiException(
+                HTTP_CODE.INTERNAL_SERVER_ERROR,
+                error.message
+            );
+        }
+    }
 }
 
 export default new BusinessRepository();
