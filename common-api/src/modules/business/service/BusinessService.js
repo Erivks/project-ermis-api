@@ -21,6 +21,16 @@ class BusinessService {
         }
     }
 
+    async findByID(id) {
+        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::findByID");
+        
+        const result = await BusinessRepository.findByID(id);
+        return { 
+            status: HTTP_CODE.OK,
+            message: result
+        };
+    }
+
     async create(req) {
         logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::create");
 

@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
 import { LOG_LEVEL } from '../../../../../../common/constants/main.js';
 import logger from '../../../../../../common/functions/logger.js';
 
@@ -45,7 +45,17 @@ class BusinessValidator {
                 .isLength({ max: 150 })
                 .optional()
         ];
-    }    
+    }
+
+    findByID() {
+        return [
+            param('id')
+                .notEmpty()
+                .withMessage('param "id" must be present')
+                .isNumeric()
+                .withMessage('param "id" must be numeric')
+        ];
+    }
 }
 
 export default new BusinessValidator();

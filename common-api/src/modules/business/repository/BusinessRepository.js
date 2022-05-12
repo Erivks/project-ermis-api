@@ -6,9 +6,23 @@ import { HTTP_CODE, LOG_LEVEL } from "../../../../../../common/constants/main.js
 class BusinessRepository {
     async findAll() {
         try {
-            logger("INFO", "Running BusinessRepository::findAll");        
+            logger(LOG_LEVEL.LOG_INFO, "Running BusinessRepository::findAll");        
             return await BusinessModel.findAll();
         } catch (error) {
+            logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
+            throw new ApiException(
+                HTTP_CODE.INTERNAL_SERVER_ERROR,
+                error.message
+            );
+        }
+    }
+
+    async findByID(id) {
+        try {
+            logger(LOG_LEVEL.LOG_INFO, "Running BusinessRepository::findByID");
+            return await BusinessModel.findByPk(id)
+        } catch (error) {
+            logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
             throw new ApiException(
                 HTTP_CODE.INTERNAL_SERVER_ERROR,
                 error.message
@@ -20,7 +34,7 @@ class BusinessRepository {
         try {
             await BusinessModel.create(body);
         } catch (error) {
-            logger(LOG_LEVEL.LOG_ERR, error.message);
+            logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
             throw new ApiException(
                 HTTP_CODE.INTERNAL_SERVER_ERROR,
                 error.message
