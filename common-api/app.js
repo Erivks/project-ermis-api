@@ -9,9 +9,8 @@ const app = express();
 const env = dotenv.config().parsed;
 const PORT = env.PORT_API || "8083";
 
-app.use(middlewareLogger);
-
 app.use(express.json());
+app.use(middlewareLogger);
 app.use(BusinessRoutes);
 
 app.get('/api/status', (req, res) => {
