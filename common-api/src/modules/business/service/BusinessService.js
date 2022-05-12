@@ -31,12 +31,48 @@ class BusinessService {
         };
     }
 
+    async updateByID(req) {
+        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::updateByID");
+
+        const body = this.validateRequest(req);
+        const params = this.validateParams(req);
+        const result = await BusinessRepository.updateByID(params.id, body);
+
+        if (typeof result == "object" && result[0] === 0) {
+            logger(LOG_LEVEL.LOG_ERR, `Row affected for Business updateByID: ${JSON.stringify(result)}`);
+            throw new ApiException(
+                HTTP_CODE.INTERNAL_SERVER_ERROR,
+                "Update failed"
+            );
+        }
+        
+        return { status: HTTP_CODE.OK }
+    }
     async create(req) {
         logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::create");
 
         const body = this.validateRequest(req);
         await BusinessRepository.create(body); 
         return { status: HTTP_CODE.OK };    
+    }
+
+    validateParams(req) {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            throw new ApiException(
+                HTTP_CODE.BAD_REQUEST,
+                errors.mapped()
+            );
+        }
+
+        if (!req.params) {
+            throw new ApiException(
+                HTTP_CODE.BAD_REQUEST,
+                "Params is empty"
+            );
+        }
+
+        return req.params;
     }
 
     validateRequest(req) {

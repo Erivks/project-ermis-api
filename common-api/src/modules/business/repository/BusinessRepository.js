@@ -41,6 +41,25 @@ class BusinessRepository {
             );
         }
     }
+
+    async updateByID(id, body) {
+        try {
+            logger(LOG_LEVEL.LOG_INFO, "Running BusinessRepository::updateByID");
+            const result = await BusinessModel.update(body, {
+                where: {
+                    id_business: id
+                }
+            });
+
+            return result;
+        } catch (error) {
+            logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
+            throw new ApiException(
+                HTTP_CODE.INTERNAL_SERVER_ERROR,
+                error.message
+            );
+        }
+    }
 }
 
 export default new BusinessRepository();

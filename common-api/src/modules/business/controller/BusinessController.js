@@ -56,6 +56,24 @@ class BusinessController {
             });
         }
     }
+
+    async updateByID(req, res) {
+        try {
+            logger(LOG_LEVEL.LOG_INFO, "Running BusinessController::updateByID");
+            const result = await BusinessService.updateByID(req);
+            res.status(result.status).json({
+                status: result.status,
+                message: "Update successfully!"
+            });
+        } catch (error) {
+            logger(LOG_LEVEL.LOG_ERR, error.message);
+            let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
+            return res.status(status).json({
+                status: status,
+                message: error.message
+            });
+        }
+    }
 }
 
 export default new BusinessController();
