@@ -1,4 +1,5 @@
 import BusinessModel from "../../modules/business/model/BusinessModel.js";
+import { LOG_LEVEL } from '../../../../../common/constants/main.js'
 import logger from '../../../../../common/functions/logger.js';
 
 export default async function seed() {
@@ -16,6 +17,6 @@ export default async function seed() {
             complement: "Atrás da Clinica da Familia"
         });
     } catch (error) {
-        logger("ERROR", error.message);
+        logger(LOG_LEVEL.LOG_ERR, error.message);
     }
 }
