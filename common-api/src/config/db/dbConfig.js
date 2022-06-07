@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { LOG_LEVEL } from '../../../../../common/constants/main.js'
 import { Sequelize } from 'sequelize';
 import logger from '../../../../../common/functions/logger.js';
 
@@ -11,14 +12,14 @@ const db = new Sequelize(env.DB, env.USER, env.PASS, {
         freezeTableName: true
     },
     logging: (msg) => {
-        logger("INFO", `Sequelize: ${msg}`);
+        logger(LOG_LEVEL.LOG_INFO, `Sequelize: ${msg}`);
     }
 });
 
 await db.authenticate().then(() => {
-    logger("INFO", "Conexão foi estabelecida com sucesso!");
+    logger(LOG_LEVEL.LOG_INFO, "Connection with db has been established!");
 }).catch((err) => {
-    logger("ERROR", err.message);
+    logger(LOG_LEVEL.LOG_ERR, err.message);
 });
 
 export default db;
