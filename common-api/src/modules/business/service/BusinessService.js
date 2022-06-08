@@ -1,5 +1,6 @@
 import ApiException from '../../../../../../common/exceptions/ApiException.js';
 import BusinessRepository from '../repository/BusinessRepository.js';
+import ResponsibleRepository from '../../responsible/repository/ResponsibleRepository.js';
 import { validationResult } from "express-validator";
 import { HTTP_CODE, LOG_LEVEL } from '../../../../../../common/constants/main.js';
 import logger from '../../../../../../common/functions/logger.js';
@@ -65,7 +66,10 @@ class BusinessService {
         logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::create");
 
         const body = this.validateRequest(req);
+
+        await ResponsibleRepository.create(body.responsible);
         await BusinessRepository.create(body); 
+        
         return { status: HTTP_CODE.CREATED };    
     }
 

@@ -43,11 +43,12 @@ class BusinessController {
         logger(LOG_LEVEL.LOG_INFO, "Running BusinessController::create");
 
         try {           
-            let result = await BusinessService.create(req);
+            const result = await BusinessService.create(req);
             let response = {
                 status: result.status,
                 message: result.message || "Created Successfully!"
             };
+
             logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
             return res.status(result.status).json(response);
             
@@ -86,6 +87,7 @@ class BusinessController {
         }
     }
 
+    //TODO: Refatorar funções 'updateByID' e 'updateByCNPJ'
     async updateByCNPJ(req, res) {
         try {
             logger(LOG_LEVEL.LOG_INFO, "Running BusinessController::updateByCNPJ");

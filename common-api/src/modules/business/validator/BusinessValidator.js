@@ -43,7 +43,24 @@ class BusinessValidator {
             body('complement')
                 .isString()
                 .isLength({ max: 150 })
-                .optional()
+                .optional(),
+            body('responsible')
+                .notEmpty()
+                .isObject(),
+            body('responsible.name')
+                .notEmpty()
+                .isString()
+                .isLength({ max: 200 }),
+            body('responsible.telephone')
+                .notEmpty()
+                .isString()
+                .isNumeric()
+                .isLength({ max: 15 }),
+            body('responsible.cpf')
+                .notEmpty()
+                .isString()
+                .isNumeric()
+                .isLength({ min: 11 })
         ];
     }
 
