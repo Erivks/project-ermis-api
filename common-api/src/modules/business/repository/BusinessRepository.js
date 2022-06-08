@@ -34,10 +34,11 @@ class BusinessRepository {
         try {
             await BusinessModel.create(body);
         } catch (error) {
-            logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
+            let msg = error.original.sqlMessage || error.message;
+            logger(LOG_LEVEL.LOG_ERR, `ERROR - ${msg}`);
             throw new ApiException(
                 HTTP_CODE.INTERNAL_SERVER_ERROR,
-                error.message
+                msg
             );
         }
     }
