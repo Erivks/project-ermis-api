@@ -7,17 +7,19 @@ class BusinessController {
         logger(LOG_LEVEL.LOG_INFO, "Running BusinessController::findAll");
         
         try {
-            let result = await BusinessService.findAll();
-            return res.status(result.status).json(result);
+            let response = await BusinessService.findAll();
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
+            return res.status(response.status).json(response);
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, error.message);
             let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
-            return res.status(status).json({
+            let response = {
                 status: status,
                 message: error.message
-            });
+            };
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
+            return res.status(status).json(response);
         }
-
     }
 
     async findByID(req, res) {
@@ -25,7 +27,7 @@ class BusinessController {
 
         try {
             const result = await BusinessService.findByID(req.params.id);
-            logger(LOG_LEVEL.LOG_INFO, `Returning data: ${JSON.stringify(result)}`);
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(result)}`);
             return res.status(result.status).json(result); 
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, error.message);
@@ -42,18 +44,22 @@ class BusinessController {
 
         try {           
             let result = await BusinessService.create(req);
-            return res.status(result.status).json({
+            let response = {
                 status: result.status,
                 message: result.message || "Created Successfully!"
-            });
+            };
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
+            return res.status(result.status).json(response);
             
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, error.message);
             let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
-            return res.status(status).json({
+            let response = {
                 status: status,
                 message: error.message
-            });
+            };
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
+            return res.status(status).json(response);
         }
     }
 
