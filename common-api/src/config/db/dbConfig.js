@@ -12,7 +12,7 @@ const db = new Sequelize(env.DB, env.USER, env.PASS, {
         freezeTableName: true
     },
     logging: (msg) => {
-        logger(LOG_LEVEL.LOG_INFO, `Sequelize: ${msg}`);
+        logger(LOG_LEVEL.LOG_DEBUG, `Sequelize: ${msg}`);
     }
 });
 
