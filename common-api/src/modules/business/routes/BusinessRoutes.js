@@ -6,6 +6,7 @@ const router = new Router();
 const baseUrl = "/api/business";
 
 //== CREATE ==
+//TODO: Adicionar objeto de responsável no cadastro de empresa
 router.post(`${baseUrl}/create`, BusinessValidator.create(), BusinessController.create);
 
 //== READ ==
@@ -13,10 +14,9 @@ router.get(`${baseUrl}/findAll`, BusinessController.findAll);
 router.get(`${baseUrl}/findByID/:id`, BusinessValidator.byID(), BusinessController.findByID);
 
 //== UPDATE ==
-// TODO: Validar endpoints
-router.put(`${baseUrl}/updateByID/:id`, BusinessValidator.byID(), BusinessController.updateByID);
-router.put(`${baseUrl}/updateByCNPJ/:cnpj`, BusinessValidator.byCNPJ(), BusinessController.updateByCNPJ);
+router.put(`${baseUrl}/updateByID/:id`, BusinessValidator.byID(), BusinessValidator.update(), BusinessController.updateByID);
+router.put(`${baseUrl}/updateByCNPJ/:cnpj`, BusinessValidator.byCNPJ(), BusinessValidator.update(), BusinessController.updateByCNPJ);
 
 //== DELETE ==
-// TODO: Desenvolver endpoints de delete
+router.delete(`${baseUrl}/deleteByID/:id`, BusinessValidator.byID(), BusinessController.deleteByID);
 export default router;

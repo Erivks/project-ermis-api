@@ -69,6 +69,14 @@ class BusinessService {
         return { status: HTTP_CODE.CREATED };    
     }
 
+    async deleteByID(req) {
+        const params = this.validateParams(req);
+
+        const result = await BusinessRepository.deleteByID(params.id);
+
+        return { status: HTTP_CODE.OK };
+    }
+
     checkUpdateResult(result) {
         if (typeof result == "object" && result[0] === 0) {
             logger(LOG_LEVEL.LOG_ERR, `Row affected for Business updateByID: ${JSON.stringify(result)}`);

@@ -63,21 +63,26 @@ class BusinessController {
         }
     }
 
+    //TODO: Refatorar funções 'updateByID' e 'updateByCNPJ'
     async updateByID(req, res) {
         try {
             logger(LOG_LEVEL.LOG_INFO, "Running BusinessController::updateByID");
             const result = await BusinessService.updateByID(req);
-            res.status(result.status).json({
+            let response = {
                 status: result.status,
-                message: "Update successfully!"
-            });
+                message: "Updated successfully!"
+            };
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
+            res.status(result.status).json(response);
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, error.message);
             let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
-            return res.status(status).json({
+            let response = {
                 status: status,
                 message: error.message
-            });
+            };
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
+            return res.status(status).json(response);
         }
     }
 
@@ -93,6 +98,22 @@ class BusinessController {
             logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
             res.status(result.status).json(response);
 
+        } catch (error) {
+            logger(LOG_LEVEL.LOG_ERR, error.message);
+            let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
+            return res.status(status).json({
+                status: status,
+                message: error.message
+            });
+        }
+    }
+
+    async deleteByID(req, res) {
+        try {
+            logger(LOG_LEVEL.LOG_INFO, "Running BusinessController::deleteByID");
+            const result = await BusinessService.deleteByID(req);
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(result)}`);
+            return res.status(result.status).json(result);
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, error.message);
             let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
