@@ -25,6 +25,14 @@ class BusinessService {
         logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::findByID");
         
         const result = await BusinessRepository.findByID(id);
+        if (!result) {
+            let msg = `Could not find ID: ${id}`;
+            logger(LOG_LEVEL.LOG_WARN, msg); 
+            return {
+                status: HTTP_CODE.OK,
+                message: msg
+            }
+        }
         return { 
             status: HTTP_CODE.OK,
             message: result
@@ -58,7 +66,7 @@ class BusinessService {
 
         const body = this.validateRequest(req);
         await BusinessRepository.create(body); 
-        return { status: HTTP_CODE.OK };    
+        return { status: HTTP_CODE.CREATED };    
     }
 
     checkUpdateResult(result) {
