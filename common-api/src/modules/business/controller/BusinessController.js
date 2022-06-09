@@ -64,11 +64,10 @@ class BusinessController {
         }
     }
 
-    //TODO: Refatorar funções 'updateByID' e 'updateByCNPJ'
     async updateByID(req, res) {
         try {
             logger(LOG_LEVEL.LOG_INFO, "Running BusinessController::updateByID");
-            const result = await BusinessService.updateByID(req);
+            const result = await BusinessService.updateBy(req);
             let response = {
                 status: result.status,
                 message: "Updated successfully!"
@@ -87,12 +86,11 @@ class BusinessController {
         }
     }
 
-    //TODO: Refatorar funções 'updateByID' e 'updateByCNPJ'
     async updateByCNPJ(req, res) {
         try {
             logger(LOG_LEVEL.LOG_INFO, "Running BusinessController::updateByCNPJ");
 
-            const result = await BusinessService.updateByCNPJ(req);
+            const result = await BusinessService.updateBy(req);
             const response = {
                 status: result.status,
                 message: "Update successfully!"

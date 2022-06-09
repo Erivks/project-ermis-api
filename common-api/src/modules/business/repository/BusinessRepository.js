@@ -43,13 +43,11 @@ class BusinessRepository {
         }
     }
 
-    async updateByID(id, body) {
+    async updateBy(object, body) {
         try {
-            logger(LOG_LEVEL.LOG_INFO, "Running BusinessRepository::updateByID");
+            logger(LOG_LEVEL.LOG_INFO, "Running BusinessRepository::updateBy");
             const result = await BusinessModel.update(body, {
-                where: {
-                    id_business: id
-                }
+                where: object
             });
 
             return result;

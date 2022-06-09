@@ -40,26 +40,26 @@ class BusinessService {
         };
     }
 
-    async updateByID(req) {
-        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::updateByID");
+    async updateBy(req) {
+        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::updateBy");
 
-        const body = this.validateRequest(req);
-        const params = this.validateParams(req);
-        const result = await BusinessRepository.updateByID(params.id, body);
+        const body      = this.validateRequest(req);
+        const params    = this.validateParams(req);
+        const object    = this.getValueForUpdate(params);
+
+        const result = await BusinessRepository.updateBy(object, body);
 
         this.checkUpdateResult(result);
         return { status: HTTP_CODE.OK }
     }
 
-    async updateByCNPJ(req) {
-        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::updateByCNPJ");
-
-        const body = this.validateRequest(req);
-        const params = this.validateParams(req);
-        const result = await BusinessRepository.updateByCNPJ(params.cnpj, body);
-
-        this.checkUpdateResult(result);
-        return { status: HTTP_CODE.OK };
+    getValueForUpdate(params) {
+        switch (Object.keys(params)[0]) {
+            case 'id':
+                return { id_business: params.id }
+            case 'cnpj':
+                return { cnpj: params.cnpj }
+        }
     }
 
     async create(req) {

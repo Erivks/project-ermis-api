@@ -6,7 +6,6 @@ const router = new Router();
 const baseUrl = "/api/business";
 
 //== CREATE ==
-//TODO: Adicionar objeto de responsável no cadastro de empresa
 router.post(`${baseUrl}/create`, BusinessValidator.create(), BusinessController.create);
 
 //== READ ==
