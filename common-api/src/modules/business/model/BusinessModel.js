@@ -1,3 +1,4 @@
+import ResponsibleModel from '../../responsible/model/ResponsibleModel.js';
 import { DataTypes } from 'sequelize';
 import db from '../../../config/db/dbConfig.js';
 
@@ -58,6 +59,16 @@ const BusinessModel = db.define('tbl_business', {
             max: 150
         }
     }
+});
+
+ResponsibleModel.hasOne(BusinessModel, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'RESTRICT',
+    foreignKey: 'id_responsible'
+});
+BusinessModel.Responsible = BusinessModel.belongsTo(ResponsibleModel, {
+    as: 'responsible',
+    foreignKey: 'id_responsible'
 });
 
 export default BusinessModel;

@@ -32,9 +32,14 @@ class BusinessRepository {
 
     async create(body) {
         try {
-            await BusinessModel.create(body);
+            await BusinessModel.create(body, {
+                include: [{
+                    association: BusinessModel.Responsible,
+                    as: 'responsible'
+                }]
+            });
         } catch (error) {
-            let msg = error.original.sqlMessage || error.message;
+            let msg = error.original ? error.original.sqlMessage : error.message;
             logger(LOG_LEVEL.LOG_ERR, `ERROR - ${msg}`);
             throw new ApiException(
                 HTTP_CODE.INTERNAL_SERVER_ERROR,

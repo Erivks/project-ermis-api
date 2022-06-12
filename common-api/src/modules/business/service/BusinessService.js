@@ -67,7 +67,6 @@ class BusinessService {
 
         const body = this.validateRequest(req);
 
-        await ResponsibleRepository.create(body.responsible);
         await BusinessRepository.create(body); 
         
         return { status: HTTP_CODE.CREATED };    
