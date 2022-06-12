@@ -4,8 +4,11 @@ import { LOG_LEVEL } from '../../../../../common/constants/main.js'
 import logger from '../../../../../common/functions/logger.js';
 
 try {
-    await BusinessModel.sync();
-    await ResponsibleModel.sync();
+    const options = {
+        force: true
+    };
+    await ResponsibleModel.sync(options);
+    await BusinessModel.sync(options);
 } catch (error) {
     logger(LOG_LEVEL.LOG_ERR, error.message);
 }
